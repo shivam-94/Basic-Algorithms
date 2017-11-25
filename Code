@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int thirdparty(int *arr,int low,int high)
+   {
+    int lsum = -999,rsum = -999,sum = 0,minLeft,maxRight;
+
+    int mid = (low + high)/2;
+
+    for(int i = mid; i >= low; i--)
+     { 
+ 			sum += arr[i];
+ 			if(sum > lsum)
+ 			 {
+ 			  lsum = sum;
+ 			  minLeft = i;
+ 			 }
+
+     }
+
+  sum = 0;
+  for(int i = mid + 1; i<=high; i++)
+   {
+ 		sum += arr[i];
+ 		if(sum > rsum)
+ 		 {
+ 		 	rsum = sum;
+ 		 	maxRight = i;
+ 		 }
+   }
+   return(lsum + rsum);
+ }
+
+int recurse(int *arr, int low, int high)
+ {
+ 	int sum = 0;
+ 	
+ 	
+	 if(low == high)
+    	 return arr[low];
+
+ 
+
+   int mid = (low + high)/2;
+
+   int midterm = thirdparty(arr,low,high);
+
+ 	int lefti = max(midterm,recurse(arr,low,mid));
+ 	int righti = max(lefti,recurse(arr,mid+1,high));
+
+ return righti;
+ } 
+
+int main()
+ {
+    int arr[16] = {13,-3,-25,30,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7};
+    //int arr[4] = {-12,-1,12,14};
+    int low = 0, high = 15,mid;
+    
+  	mid = (low + high)/2;
+    
+    int third = thirdparty(arr,low,high);
+    int GetMAx = max(recurse(arr,low,mid),recurse(arr,mid+1,high));
+   
+
+   cout << max(GetMAx,third)<<endl;
+  return 0;
+}
+
+
+  
